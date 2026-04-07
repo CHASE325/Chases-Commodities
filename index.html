@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chase Slots</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="mainMenu" class="main-menu">
+      <div class="menu-decoration left">🎰💰🎲</div>
+      <h1>Chase Casino</h1>
+      <p id="menuComment">Welcome to the ultimate casino experience!</p>
+      <div class="menu-options">
+        <button id="menuSlots">Slots</button>
+        <button id="menuShop">Shop</button>
+        <button id="menuProfile">Profile</button>
+        <button id="menuLeaderboard">Leaderboard</button>
+      </div>
+      <div class="save-load">
+        <button id="saveGame">Save Game</button>
+        <button id="loadGame">Load Game</button>
+        <select id="saveSlot">
+          <option value="1">Slot 1</option>
+          <option value="2">Slot 2</option>
+          <option value="3">Slot 3</option>
+        </select>
+      </div>
+      <div class="menu-decoration right">🏆🃏💎</div>
+      <div class="moving-text">🎰 Spin to Win! 🎲 Gamble Responsibly 🃏</div>
+      <div class="moving-text">💰 Earn Chips with Dish Duty! 🏆 Climb the Leaderboard!</div>
+      <div class="moving-text">🎯 Test Your Luck! 🎉 Big Wins Await!</div>
+      <div class="moving-text">🔥 Hot Streaks! 💸 Cash Out Big! 🎪 Casino Fun!</div>
+      <div class="moving-text">🃏 Play Smart! 🎰 Jackpots Everywhere! 🏅 Top Scores!</div>
+    </div>
+
+    <div id="gameContainer" class="game-container hidden">
+      <header>
+        <h1>Chase Slots</h1>
+        <p>Your casino hub: slots and blackjack share the same chips.</p>
+        <button id="backToMenu">Back to Menu</button>
+      </header>
+
+      <!-- Left sidebar: always-available mini-game launcher/panel -->
+      <aside class="sidebar-left" id="sidebarLeft">
+        <div class="mini-panel">
+          <h3>Dish Duty</h3>
+          <div id="miniStatus">Ready</div>
+          <button id="openMini">Start Dish Duty</button>
+        </div>
+        <div id="miniGamePanel" class="mini-game-panel hidden">
+          <h4>Dish Duty</h4>
+          <div class="mini-controls">
+            <div>Time: <span id="miniTimer">30</span>s</div>
+            <div>Washed: <span id="washedCount">0</span></div>
+            <div>Score: <span id="miniScore">0</span></div>
+          </div>
+          <div id="plates" class="plates"></div>
+          <div class="mini-actions">
+            <button id="startMini">Start</button>
+            <button id="closeMiniPanel">Close</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="slot-wrap">
+        <div class="controls">
+          <div class="coins">Chips: <span id="coins">0</span></div>
+          <div class="options">
+            <label class="showlines"><input id="showLines" type="checkbox" checked> Show winning lines</label>
+            <div class="bet">
+              Bet: <button id="betDown">-</button> <span id="bet">1</span> <button id="betUp">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="slot">
+          <div class="reels" id="reels">
+            <!-- 5 columns x 3 rows -->
+            <div class="col" data-col="0">
+              <div class="cell" data-row="0">—</div>
+              <div class="cell" data-row="1">—</div>
+              <div class="cell" data-row="2">—</div>
+            </div>
+            <div class="col" data-col="1">
+              <div class="cell" data-row="0">—</div>
+              <div class="cell" data-row="1">—</div>
+              <div class="cell" data-row="2">—</div>
+            </div>
+            <div class="col" data-col="2">
+              <div class="cell" data-row="0">—</div>
+              <div class="cell" data-row="1">—</div>
+              <div class="cell" data-row="2">—</div>
+            </div>
+            <div class="col" data-col="3">
+              <div class="cell" data-row="0">—</div>
+              <div class="cell" data-row="1">—</div>
+              <div class="cell" data-row="2">—</div>
+            </div>
+            <div class="col" data-col="4">
+              <div class="cell" data-row="0">—</div>
+              <div class="cell" data-row="1">—</div>
+              <div class="cell" data-row="2">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="status">
+          <div id="message">Good luck!</div>
+        </div>
+
+        <div class="bottom-spin">
+          <button id="spinBtn" class="big-spin">Spin</button>
+        </div>
+
+        </div>
+
+        <div id="minigame" class="minigame hidden">
+          <div class="minigame-msg">Out of chips! Use Dish Duty (left) to earn chips.</div>
+          <div><button id="closeMini">Close</button></div>
+        </div>
+      </main>
+
+      <!-- Right-side paytable/menu -->
+      <aside class="paytable" id="paytable">
+        <h3>Paytable</h3>
+        <div id="payRules">Winning rule: horizontal rows, vertical columns, and bonus paylines.</div>
+        <div id="lineInfo">All line types active</div>
+        <table id="payTableGrid">
+          <thead><tr><th>Symbol</th><th>Row 3</th><th>Row 4</th><th>Row 5</th><th>Col 3</th><th>Col 4</th><th>Col 5</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="legend">Payouts scale with your bet and unlock surprise bonuses.</div>
+      </aside>
+    </div>
+
+    <!-- Shop -->
+    <div id="shopPanel" class="shop hidden">
+      <h2>Shop</h2>
+      <div class="shop-coins">Chips: <span id="shopCoins">0</span></div>
+      <p>Buy backgrounds and themes with your chips!</p>
+      <div class="shop-items">
+        <div class="shop-item" data-item="bg1" data-cost="10"><div class="item-preview" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);"></div><h4>Neon Glow</h4><p>10 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg2" data-cost="15"><div class="item-preview" style="background: linear-gradient(45deg, #667eea, #764ba2);"></div><h4>Purple Dream</h4><p>15 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg3" data-cost="20"><div class="item-preview" style="background: linear-gradient(45deg, #f093fb, #f5576c);"></div><h4>Pink Sunset</h4><p>20 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg4" data-cost="25"><div class="item-preview" style="background: linear-gradient(45deg, #4facfe, #00f2fe);"></div><h4>Ocean Blue</h4><p>25 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg5" data-cost="30"><div class="item-preview" style="background: linear-gradient(45deg, #43e97b, #38f9d7);"></div><h4>Forest Green</h4><p>30 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="theme1" data-cost="60"><div class="item-preview" style="background: #000; color: #ffd700;">Gold Theme</div><h4>Golden Casino</h4><p>60 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="theme2" data-cost="65"><div class="item-preview" style="background: #222; color: #ff4500;">Red Hot</div><h4>Fiery Red</h4><p>65 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="theme3" data-cost="70"><div class="item-preview" style="background: #07170b; color: #39ff14;">Matrix</div><h4>Matrix Green</h4><p>70 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg6" data-cost="12"><div class="item-preview" style="background: linear-gradient(45deg, #ff9a9e, #fecfef);"></div><h4>Rose Petal</h4><p>12 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg7" data-cost="18"><div class="item-preview" style="background: linear-gradient(45deg, #a8edea, #fed6e3);"></div><h4>Pastel Waves</h4><p>18 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg8" data-cost="22"><div class="item-preview" style="background: linear-gradient(45deg, #d299c2, #fef9d7);"></div><h4>Lavender Bliss</h4><p>22 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg9" data-cost="28"><div class="item-preview" style="background: linear-gradient(45deg, #667eea, #764ba2);"></div><h4>Deep Purple</h4><p>28 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg10" data-cost="32"><div class="item-preview" style="background: linear-gradient(45deg, #f093fb, #f5576c);"></div><h4>Hot Pink</h4><p>32 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="theme4" data-cost="75"><div class="item-preview" style="background: #000; color: #fff;">Classic Black</div><h4>Midnight</h4><p>75 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="theme5" data-cost="80"><div class="item-preview" style="background: #fff; color: #000;">Light Mode</div><h4>Daylight</h4><p>80 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg11" data-cost="14"><div class="item-preview" style="background: linear-gradient(45deg, #ffecd2, #fcb69f);"></div><h4>Peach Fuzz</h4><p>14 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg12" data-cost="16"><div class="item-preview" style="background: linear-gradient(45deg, #a8c0ff, #3f2b96);"></div><h4>Blue Lagoon</h4><p>16 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg13" data-cost="24"><div class="item-preview" style="background: linear-gradient(45deg, #ff9a9e, #fecfef, #ffecd2);"></div><h4>Triple Tone</h4><p>24 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="bg14" data-cost="26"><div class="item-preview" style="background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);"></div><h4>Rainbow Mix</h4><p>26 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="theme6" data-cost="85"><div class="item-preview" style="background: #ffd700; color: #000;">Luxury Gold</div><h4>Premium Gold</h4><p>85 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="theme7" data-cost="90"><div class="item-preview" style="background: #081a2d; color: #4dd2ff;">Neon Wave</div><h4>Neon Wave</h4><p>90 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="theme8" data-cost="95"><div class="item-preview" style="background: #f4f0e6; color: #2b2b2b;">Ivory Luxe</div><h4>Ivory Luxe</h4><p>95 chips</p><button>Buy</button></div>
+        <div class="shop-item" data-item="theme9" data-cost="100"><div class="item-preview" style="background: #141026; color: #ff9bff;">Cosmic Glow</div><h4>Cosmic Glow</h4><p>100 chips</p><button>Buy</button></div>
+      </div>
+      <button id="closeShop">Close Shop</button>
+    </div>
+
+    <!-- Profile -->
+    <div id="profilePanel" class="profile hidden">
+      <h2>Your Profile</h2>
+      <div id="profileStats"></div>
+      <button id="closeProfile">Back to Menu</button>
+    </div>
+
+    <!-- Leaderboard -->
+    <div id="leaderboardPanel" class="leaderboard hidden">
+      <h2>Leaderboard</h2>
+      <div id="leaderboardList"></div>
+      <button id="closeLeaderboard">Back to Menu</button>
+    </div>
+
+    <footer></footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
